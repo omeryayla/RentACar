@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import kodlama.io.rentACar.business.abstracts.ModelService;
+import kodlama.io.rentACar.business.requests.CreateModelRequest;
 import kodlama.io.rentACar.business.responses.GetAllModelsResponse;
 import kodlama.io.rentACar.core.utilities.mappers.ModelMapperService;
 import kodlama.io.rentACar.dataAccess.abstracts.ModelRepository;
@@ -31,6 +32,16 @@ public class ModelManager implements ModelService {
 				.collect(Collectors.toList());
 		
 		return modelsResponse;
+	}
+
+	@Override
+	public void add(CreateModelRequest createModelRequest) {
+		
+		Model model = this.modelMapperService.forRequest().map(createModelRequest, Model.class);
+		
+		
+		this.modelRepository.save(model);
+		
 	}
 
 }
